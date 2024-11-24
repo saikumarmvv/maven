@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Dev-Stage') {
+            steps {
+                echo 'Hello Dev-Stage'
+                build quietPeriod: 3, job: 'Job1'
+                git credentialsId: 'c2b23aa5-8fe6-4445-b979-9d13c1481ed8', url: 'https://github.com/polarapu/maven-project1.git'
+            }
+        }
+        stage('Test-Stage') {
+            steps {
+                echo 'Hello Test Env'
+                build quietPeriod: 3, job: 'Job2'
+            }
+        }
+        stage('Prod-Stage') {
+            steps {
+                echo 'Hello Prod Env'
+                build quietPeriod: 3, job: 'Test1'
+            }
+        }
+    }
+}
